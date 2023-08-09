@@ -1,17 +1,16 @@
 pipeline {
-    environment {
-dockerImage = ''
-}
-    agent any
+    agent none
     
     stages {
         stage('image build){
+              agent any
               steps {
                   script{
                      dockerImage = docker.build my-zip-image + ":$BUILD_NUMBER"
                   }
               }
-        }
+         }
+              
         stage('Build') {
             agent {
         docker {
