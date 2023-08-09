@@ -13,4 +13,4 @@ RUN apt-get update && \
 COPY zip_job.py /tmp/
 
 # Run command on container startup
-CMD uname -a && file /tmp/zip_job.py && python3 /tmp/zip_job.py
+CMD uname -a && file /tmp/zip_job.py
