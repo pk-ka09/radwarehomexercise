@@ -1,8 +1,25 @@
 pipeline {
-    agent { dockerfile true }
-
+    environment {
+dockerImage = ''
+}
+    agent any
+    
     stages {
+        stage('image build){
+              steps {
+                  script{
+                     dockerImage = docker.build my-zip-image + ":$BUILD_NUMBER"
+                  }
+              }
+        }
         stage('Build') {
+            agent {
+        docker {
+            image 'my-zip-image'
+            label 'zip-job-docker'
+            args '-u root:root --privileged'
+        }
+    }
             steps {
                 script {
                     sh 'python3 /tmp/zip_job.py'
