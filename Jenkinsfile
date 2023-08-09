@@ -1,13 +1,5 @@
 pipeline {
     agent { dockerfile true } 
-        
-    
-    #environment {
-        ARTIFACTORY_URL = 'https://artifactory-xx'
-        ARTIFACTORY_USER = 'superman'
-        ARTIFACTORY_PASSWORD = 'P@ssw0rd123$'
-        ARTIFACTORY_REPO = "store-artifacts/${VERSION}"
-    }
 
     stages {
         stage('Build') {
@@ -18,23 +10,9 @@ pipeline {
             }
         }
         
-        #stage('Publish') {
-            when {
-                expression { currentBuild.resultIsBetterOrEqualTo('SUCCESS') }
-            }
-            steps {
-                script {
-                    dir('/tmp') {
-                        def zipFiles = sh(script: 'ls *.zip', returnStdout: true).trim().split('\n')
-                        for (def zipFile in zipFiles) {
-                            sh "curl -u ${ARTIFACTORY_USER}:${ARTIFACTORY_PASSWORD} -X PUT ${ARTIFACTORY_URL}/${ARTIFACTORY_REPO}/${zipFile} --upload-file ${zipFile}"
-                        }
-                    }
-                }
-            }
-        }
+        
 
-        #stage('Report') {
+        stage('Report') {
             post {
                 always {
                     emailext(
