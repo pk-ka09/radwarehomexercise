@@ -6,7 +6,7 @@ ENV VERSION=1.2.0
 
 # Install required packages
 RUN apt-get update && \
-    apt-get install -y python3 vim zip unzip && \
+    apt-get install -y python3 vim git zip unzip && \
     rm -rf /var/lib/apt/lists/*
 
 # Copy files
