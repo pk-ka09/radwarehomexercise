@@ -2,12 +2,11 @@ pipeline {
     agent { dockerfile true } 
 
     stages {
-        stage('Build') {
+        stage('test') {
             steps {
-                script {
-                    sh 'python3 /tmp/zip_job.py'
-                }
+                git --version
             }
+            
         }
     }
 }
