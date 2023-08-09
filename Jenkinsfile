@@ -2,7 +2,7 @@ pipeline {
     agent { dockerfile true } 
         
     
-    environment {
+    #environment {
         ARTIFACTORY_URL = 'https://artifactory-xx'
         ARTIFACTORY_USER = 'superman'
         ARTIFACTORY_PASSWORD = 'P@ssw0rd123$'
@@ -18,7 +18,7 @@ pipeline {
             }
         }
         
-        stage('Publish') {
+        #stage('Publish') {
             when {
                 expression { currentBuild.resultIsBetterOrEqualTo('SUCCESS') }
             }
@@ -34,7 +34,7 @@ pipeline {
             }
         }
 
-        stage('Report') {
+        #stage('Report') {
             post {
                 always {
                     emailext(
