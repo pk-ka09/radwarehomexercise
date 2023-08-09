@@ -1,12 +1,31 @@
 pipeline {
-    agent { dockerfile true } 
+    agent { dockerfile true }
 
     stages {
-        stage('test') {
+        stage('Build') {
             steps {
-                sh 'python3 --version'
+                script {
+                    sh 'python3 /tmp/zip_job.py'
+                }
             }
-            
+        }
+        
+     stage('Report') {
+            post {
+                always {
+                    emailext(
+                        subject: "Zip Job Build ${currentBuild.result}",
+                        to: "${env.BUILD_USER_EMAIL}",
+                        body: "${currentBuild.result}: ${env.BUILD_URL}"
+                    )
+                }
+            }
+        }
+    }
+
+    post {
+        always {
+            cleanWs()
         }
     }
 }
